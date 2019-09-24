@@ -17,7 +17,7 @@ public class Application {
         long seed = System.currentTimeMillis();
         int capacity = 1000;
         int geneLength = Configuration.instance.numberOfItems;
-        int generations = 1000;
+        int generations = 500;
         Knapsack k = new Knapsack(Configuration.instance.maximumCapacity,"./data/knapsack_instance.csv");
 
         System.out.println("Knapsack Generated:");
@@ -25,7 +25,7 @@ public class Application {
         System.out.println("# of Items: " + k.GetTable().size());
 
         KnapsackGAManager ga = KnapsackGAManager.KnapsackCreator(capacity,geneLength,k,new MersenneTwisterFast(seed),
-                0.005f, KnapsackGAManager.MutationOperator.BITFLIP,0.1f,KnapsackGAManager.SelectionOperator.ROULETTE,
+                0.05f, KnapsackGAManager.MutationOperator.BITFLIP,0.1f,KnapsackGAManager.SelectionOperator.ROULETTE,
                 1f,KnapsackGAManager.CrossoverOperator.ONEPOINT, GAManager.GAMODE.DEBUG);
 
         long genStart;
@@ -33,7 +33,7 @@ public class Application {
         {
             genStart = System.currentTimeMillis();
             ga.DoCylce();
-            System.out.println("Generation " + (i+1) + " complete. (" + (System.currentTimeMillis() - genStart)/1000f + ")");
+            System.out.println("Generation " + (i+1) + " complete. (" + (System.currentTimeMillis() - genStart)/1000f + "s) --> Best: " + ga.GetBestAgent().GetFitness());
         }
 
         ga.writePopulationReport("./data/Testing/" + System.currentTimeMillis() + ".dat");
