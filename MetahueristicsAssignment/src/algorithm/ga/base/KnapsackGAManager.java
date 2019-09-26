@@ -2,6 +2,7 @@ package algorithm.ga.base;
 
 import algorithm.ga.evolution.crossover.CrossOverFunction;
 import algorithm.ga.evolution.crossover.OnePointCrossover;
+import algorithm.ga.evolution.crossover.TwoPointCrossover;
 import algorithm.ga.evolution.fitness.FitnessFunction;
 import algorithm.ga.evolution.fitness.KnapsackFitnessFunctionSimple;
 import algorithm.ga.evolution.mutation.BitFlip;
@@ -44,6 +45,9 @@ public class KnapsackGAManager extends GAManager<Boolean> {
         CrossOverFunction<Boolean> cFunc;
         switch (cOp)
         {
+            case TWOPOINT:
+                cFunc = new TwoPointCrossover<>(randomizer);
+                break;
             default:
                 cFunc = new OnePointCrossover<>(randomizer);
         }

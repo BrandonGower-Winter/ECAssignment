@@ -169,6 +169,7 @@ public class GAManager<T>
     public void writePopulationReport(String path)
     {
         try (FileWriter fw = new FileWriter(path)) {
+            fw.append("n=" + capacity + " m=" + mutationRate + " c=" + crossoverRate + " e=" + elitismRatio + '\n');
             for (String s : log)
             {
                 fw.append(s);
