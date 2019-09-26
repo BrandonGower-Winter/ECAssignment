@@ -2,7 +2,11 @@ package main;
 
 import algorithm.ga.base.GAManager;
 import algorithm.ga.base.KnapsackGAManager;
+import algorithm.ga.evolution.mutation.Inversion;
+import algorithm.ga.evolution.mutation.Reverse;
 import random.MersenneTwisterFast;
+
+import java.util.ArrayList;
 
 public class Application {
     // --- command line ---
@@ -12,7 +16,7 @@ public class Application {
 
         DebugMode mode = DebugMode.CONSOLE;
         long seed = System.currentTimeMillis();
-        int capacity = 500;
+        int capacity = 100;
         int geneLength = Configuration.instance.numberOfItems;
         int generations = 150;
         Knapsack k = new Knapsack(Configuration.instance.maximumCapacity,"./data/knapsack_instance.csv");
@@ -25,7 +29,7 @@ public class Application {
         }
 
         KnapsackGAManager ga = KnapsackGAManager.KnapsackCreator(capacity,geneLength,k,new MersenneTwisterFast(seed),
-                0.05f, KnapsackGAManager.MutationOperator.EXCHANGE,0.01f,KnapsackGAManager.SelectionOperator.TOURNAMENT,
+                0.05f, KnapsackGAManager.MutationOperator.INVERSION,0.01f,KnapsackGAManager.SelectionOperator.TOURNAMENT,
                 1f,KnapsackGAManager.CrossoverOperator.TWOPOINT, GAManager.GAMODE.DEBUG);
 
         long genStart;
@@ -42,7 +46,6 @@ public class Application {
             ga.writePopulationReport("./data/Testing/" + System.currentTimeMillis() + ".dat");
 
         System.out.println("Completed in " + (System.currentTimeMillis() - seed)/1000f + " seconds.\n" + "Best Agent --> " + ga.GetBestAgent().GetFitness());
-
     }
 
     enum DebugMode

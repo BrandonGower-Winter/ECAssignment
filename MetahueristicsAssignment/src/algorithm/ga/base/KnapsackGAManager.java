@@ -5,9 +5,7 @@ import algorithm.ga.evolution.crossover.OnePointCrossover;
 import algorithm.ga.evolution.crossover.KPointCrossover;
 import algorithm.ga.evolution.fitness.FitnessFunction;
 import algorithm.ga.evolution.fitness.KnapsackFitnessFunctionSimple;
-import algorithm.ga.evolution.mutation.BitFlip;
-import algorithm.ga.evolution.mutation.Exchange;
-import algorithm.ga.evolution.mutation.MutateFunction;
+import algorithm.ga.evolution.mutation.*;
 import algorithm.ga.evolution.randomizer.GeneRandomizer;
 import algorithm.ga.evolution.randomizer.KnapsackGeneRandomizer;
 import algorithm.ga.evolution.selection.RouletteWheel;
@@ -42,6 +40,12 @@ public class KnapsackGAManager extends GAManager<Boolean> {
         {
             case EXCHANGE:
                 mFunc = new Exchange<>(randomizer);
+                break;
+            case REVERSE:
+                mFunc = new Reverse<>(randomizer);
+                break;
+            case INVERSION:
+                mFunc = new Inversion(randomizer);
                 break;
             default:
                 mFunc = new BitFlip(randomizer);
@@ -93,7 +97,7 @@ public class KnapsackGAManager extends GAManager<Boolean> {
         EXCHANGE,
         INVERSION,
         INSERTION,
-        DISPLACEMENT
+        REVERSE
     }
 
     public enum SelectionOperator
