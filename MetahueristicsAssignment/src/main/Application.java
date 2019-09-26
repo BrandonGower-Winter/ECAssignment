@@ -1,14 +1,8 @@
 package main;
 
 import algorithm.ga.base.GAManager;
-import algorithm.ga.base.GeneticAgent;
 import algorithm.ga.base.KnapsackGAManager;
-import algorithm.ga.evolution.crossover.OnePointCrossover;
-import algorithm.ga.evolution.crossover.TwoPointCrossover;
-import algorithm.ga.evolution.mutation.BitFlip;
 import random.MersenneTwisterFast;
-
-import java.util.ArrayList;
 
 public class Application {
     // --- command line ---
@@ -18,7 +12,7 @@ public class Application {
 
         DebugMode mode = DebugMode.CONSOLE;
         long seed = System.currentTimeMillis();
-        int capacity = 1000;
+        int capacity = 500;
         int geneLength = Configuration.instance.numberOfItems;
         int generations = 150;
         Knapsack k = new Knapsack(Configuration.instance.maximumCapacity,"./data/knapsack_instance.csv");
@@ -31,7 +25,7 @@ public class Application {
         }
 
         KnapsackGAManager ga = KnapsackGAManager.KnapsackCreator(capacity,geneLength,k,new MersenneTwisterFast(seed),
-                0.05f, KnapsackGAManager.MutationOperator.BITFLIP,0.01f,KnapsackGAManager.SelectionOperator.ROULETTE,
+                0.05f, KnapsackGAManager.MutationOperator.BITFLIP,0.01f,KnapsackGAManager.SelectionOperator.TOURNAMENT,
                 1f,KnapsackGAManager.CrossoverOperator.TWOPOINT, GAManager.GAMODE.DEBUG);
 
         long genStart;

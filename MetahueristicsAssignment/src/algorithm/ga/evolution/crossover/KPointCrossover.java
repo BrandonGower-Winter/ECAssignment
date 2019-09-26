@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Stack;
 
-public class TwoPointCrossover<T> extends CrossOverFunction<T>
+public class KPointCrossover<T> extends CrossOverFunction<T>
 {
     private MersenneTwisterFast randomizer;
-
-    public TwoPointCrossover(MersenneTwisterFast randomizer)
+    private int k = 2;
+    public KPointCrossover(int k, MersenneTwisterFast randomizer)
     {
+        this.k = k;
         this.randomizer = randomizer;
     }
 
@@ -20,12 +21,12 @@ public class TwoPointCrossover<T> extends CrossOverFunction<T>
     public ArrayList<ArrayList<T>> CrossOver(ArrayList<T> parent, ArrayList<T> otherParent)
     {
         Queue<Integer> queue = new ArrayDeque<>();
-        for(int i = 0; i < 2; i++)
+        for(int i = 0; i < k; i++)
         {
             if(i == 0)
-                queue.add(randomizer.nextInt(parent.size()-(2) - 1) + 1);
+                queue.add(randomizer.nextInt(parent.size()-(k) - 1) + 1);
             else
-                queue.add(randomizer.nextInt(parent.size()-(2-queue.size()) - queue.peek())+queue.peek() + queue.size());
+                queue.add(randomizer.nextInt(parent.size()-(k-queue.size()) - queue.peek())+queue.peek() + queue.size());
         }
 
         ArrayList<ArrayList<T>> children = new ArrayList<>();

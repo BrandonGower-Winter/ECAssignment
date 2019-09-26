@@ -2,7 +2,7 @@ package algorithm.ga.base;
 
 import algorithm.ga.evolution.crossover.CrossOverFunction;
 import algorithm.ga.evolution.crossover.OnePointCrossover;
-import algorithm.ga.evolution.crossover.TwoPointCrossover;
+import algorithm.ga.evolution.crossover.KPointCrossover;
 import algorithm.ga.evolution.fitness.FitnessFunction;
 import algorithm.ga.evolution.fitness.KnapsackFitnessFunctionSimple;
 import algorithm.ga.evolution.mutation.BitFlip;
@@ -11,6 +11,7 @@ import algorithm.ga.evolution.randomizer.GeneRandomizer;
 import algorithm.ga.evolution.randomizer.KnapsackGeneRandomizer;
 import algorithm.ga.evolution.selection.RouletteWheel;
 import algorithm.ga.evolution.selection.SelectionFunction;
+import algorithm.ga.evolution.selection.Tournament;
 import main.Knapsack;
 import random.MersenneTwisterFast;
 
@@ -46,7 +47,7 @@ public class KnapsackGAManager extends GAManager<Boolean> {
         switch (cOp)
         {
             case TWOPOINT:
-                cFunc = new TwoPointCrossover<>(randomizer);
+                cFunc = new KPointCrossover<>(2,randomizer);
                 break;
             default:
                 cFunc = new OnePointCrossover<>(randomizer);
@@ -55,6 +56,9 @@ public class KnapsackGAManager extends GAManager<Boolean> {
         SelectionFunction<Boolean> sFunc;
         switch (sOp)
         {
+            case TOURNAMENT:
+                sFunc = new Tournament<>(10,randomizer); //Cause for concern
+                break;
             default:
                 sFunc = new RouletteWheel<>(randomizer);
         }
