@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="016f4cab-f591-4943-8243-5c1e14431634" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/crossover/TwoPointCrossover.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/.idea/Python.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/GAPlotter.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/KnapsackVerifyer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/PrintDataFiles.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/Testing/1569352693395.dat" beforeDir="false" afterPath="$PROJECT_DIR$/data/Testing/1569352693395.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/base/GAManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/base/GAManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/base/KnapsackGAManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/base/KnapsackGAManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Application.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

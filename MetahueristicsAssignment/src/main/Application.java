@@ -16,15 +16,19 @@ public class Application {
     public static void main(String... args)
     {
 
+        DebugMode mode = DebugMode.CONSOLE;
         long seed = System.currentTimeMillis();
         int capacity = 1000;
         int geneLength = Configuration.instance.numberOfItems;
-        int generations = 100;
+        int generations = 150;
         Knapsack k = new Knapsack(Configuration.instance.maximumCapacity,"./data/knapsack_instance.csv");
 
-        System.out.println("Knapsack Generated:");
-        System.out.println("Max Weight: " + k.GetMaxWeight());
-        System.out.println("# of Items: " + k.GetTable().size());
+        if(mode == DebugMode.CONSOLE || mode == DebugMode.FILECONSOLE)
+        {
+            System.out.println("Knapsack Generated:");
+            System.out.println("Max Weight: " + k.GetMaxWeight());
+            System.out.println("# of Items: " + k.GetTable().size());
+        }
 
         KnapsackGAManager ga = KnapsackGAManager.KnapsackCreator(capacity,geneLength,k,new MersenneTwisterFast(seed),
                 0.05f, KnapsackGAManager.MutationOperator.BITFLIP,0.01f,KnapsackGAManager.SelectionOperator.ROULETTE,
@@ -35,12 +39,23 @@ public class Application {
         {
             genStart = System.currentTimeMillis();
             ga.DoCylce();
-            System.out.println("Generation " + (i+1) + " complete. (" + (System.currentTimeMillis() - genStart)/1000f + "s) --> Best: " + ga.GetBestAgent().GetFitness() +
+            if(mode == DebugMode.CONSOLE || mode == DebugMode.FILECONSOLE)
+                System.out.println("Generation " + (i+1) + " complete. (" + (System.currentTimeMillis() - genStart)/1000f + "s) --> Best: " + ga.GetBestAgent().GetFitness() +
                     " Average: " + ga.GetAverageFitness() + " Lowest: " + ga.GetLowestFitness());
         }
 
-        //ga.writePopulationReport("./data/Testing/" + System.currentTimeMillis() + ".dat");
-        System.out.println("Completed in " + (System.currentTimeMillis() - seed)/1000f + " seconds.");
+        if(mode == DebugMode.FILE || mode == DebugMode.FILECONSOLE)
+            ga.writePopulationReport("./data/Testing/" + System.currentTimeMillis() + ".dat");
 
+        System.out.println("Completed in " + (System.currentTimeMillis() - seed)/1000f + " seconds.\n" + "Best Agent --> " + ga.GetBestAgent().GetFitness());
+
+    }
+
+    enum DebugMode
+    {
+        NONE,
+        FILE,
+        CONSOLE,
+        FILECONSOLE
     }
 }
