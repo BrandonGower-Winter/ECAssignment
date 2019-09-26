@@ -25,7 +25,7 @@ public class Application {
         }
 
         KnapsackGAManager ga = KnapsackGAManager.KnapsackCreator(capacity,geneLength,k,new MersenneTwisterFast(seed),
-                0.05f, KnapsackGAManager.MutationOperator.BITFLIP,0.01f,KnapsackGAManager.SelectionOperator.TOURNAMENT,
+                0.05f, KnapsackGAManager.MutationOperator.EXCHANGE,0.01f,KnapsackGAManager.SelectionOperator.TOURNAMENT,
                 1f,KnapsackGAManager.CrossoverOperator.TWOPOINT, GAManager.GAMODE.DEBUG);
 
         long genStart;

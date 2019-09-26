@@ -6,6 +6,7 @@ import algorithm.ga.evolution.crossover.KPointCrossover;
 import algorithm.ga.evolution.fitness.FitnessFunction;
 import algorithm.ga.evolution.fitness.KnapsackFitnessFunctionSimple;
 import algorithm.ga.evolution.mutation.BitFlip;
+import algorithm.ga.evolution.mutation.Exchange;
 import algorithm.ga.evolution.mutation.MutateFunction;
 import algorithm.ga.evolution.randomizer.GeneRandomizer;
 import algorithm.ga.evolution.randomizer.KnapsackGeneRandomizer;
@@ -39,6 +40,9 @@ public class KnapsackGAManager extends GAManager<Boolean> {
         MutateFunction<Boolean> mFunc;
         switch (mOp)
         {
+            case EXCHANGE:
+                mFunc = new Exchange<>(randomizer);
+                break;
             default:
                 mFunc = new BitFlip(randomizer);
 
