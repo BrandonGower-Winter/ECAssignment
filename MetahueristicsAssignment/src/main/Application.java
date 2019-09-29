@@ -2,6 +2,8 @@ package main;
 
 import algorithm.ga.base.GAManager;
 import algorithm.ga.base.KnapsackGAManager;
+import algorithm.ga.evolution.mutation.Displacement;
+import algorithm.ga.evolution.mutation.Insertion;
 import algorithm.ga.evolution.mutation.Inversion;
 import algorithm.ga.evolution.mutation.Reverse;
 import random.MersenneTwisterFast;
@@ -14,39 +16,55 @@ public class Application {
     public static void main(String... args)
     {
 
-        DebugMode mode = DebugMode.CONSOLE;
+        HeuristicMode mode = HeuristicMode.GA;
+        DebugMode debugMode = DebugMode.CONSOLE;
         long seed = System.currentTimeMillis();
         int capacity = 100;
         int geneLength = Configuration.instance.numberOfItems;
         int generations = 150;
         Knapsack k = new Knapsack(Configuration.instance.maximumCapacity,"./data/knapsack_instance.csv");
 
-        if(mode == DebugMode.CONSOLE || mode == DebugMode.FILECONSOLE)
+        float bestResult = 0;
+
+        if(debugMode == DebugMode.CONSOLE || debugMode == DebugMode.FILECONSOLE)
         {
             System.out.println("Knapsack Generated:");
             System.out.println("Max Weight: " + k.GetMaxWeight());
             System.out.println("# of Items: " + k.GetTable().size());
         }
 
-        KnapsackGAManager ga = KnapsackGAManager.KnapsackCreator(capacity,geneLength,k,new MersenneTwisterFast(seed),
-                0.05f, KnapsackGAManager.MutationOperator.INVERSION,0.01f,KnapsackGAManager.SelectionOperator.TOURNAMENT,
-                1f,KnapsackGAManager.CrossoverOperator.TWOPOINT, GAManager.GAMODE.DEBUG);
+        long start = System.currentTimeMillis();
 
-        long genStart;
-        for(int i = 0; i < generations; i++)
+        if(mode == HeuristicMode.GA)
         {
-            genStart = System.currentTimeMillis();
-            ga.DoCylce();
-            if(mode == DebugMode.CONSOLE || mode == DebugMode.FILECONSOLE)
-                System.out.println("Generation " + (i+1) + " complete. (" + (System.currentTimeMillis() - genStart)/1000f + "s) --> Best: " + ga.GetBestAgent().GetFitness() +
-                    " Average: " + ga.GetAverageFitness() + " Lowest: " + ga.GetLowestFitness());
+            KnapsackGAManager ga = KnapsackGAManager.KnapsackCreator(capacity,geneLength,k,new MersenneTwisterFast(seed),
+                    0.05f, KnapsackGAManager.MutationOperator.INSERTION,0.01f,KnapsackGAManager.SelectionOperator.TOURNAMENT,
+                    1f,KnapsackGAManager.CrossoverOperator.TWOPOINT, GAManager.GAMODE.DEBUG);
+
+            long genStart;
+            for(int i = 0; i < generations; i++)
+            {
+                genStart = System.currentTimeMillis();
+                ga.DoCylce();
+                if(debugMode == DebugMode.CONSOLE || debugMode == DebugMode.FILECONSOLE)
+                    System.out.println("Generation " + (i+1) + " complete. (" + (System.currentTimeMillis() - genStart)/1000f + "s) --> Best: " + ga.GetBestAgent().GetFitness() +
+                            " Average: " + ga.GetAverageFitness() + " Lowest: " + ga.GetLowestFitness());
+            }
+
+            if(debugMode == DebugMode.FILE || debugMode == DebugMode.FILECONSOLE)
+                ga.writePopulationReport("./data/Testing/" + seed + ".dat");
+
+            bestResult = ga.GetBestAgent().GetFitness();
+        }
+        else if(mode == HeuristicMode.SA)
+        {
+
         }
 
-        if(mode == DebugMode.FILE || mode == DebugMode.FILECONSOLE)
-            ga.writePopulationReport("./data/Testing/" + System.currentTimeMillis() + ".dat");
+        System.out.println("Completed in " + (System.currentTimeMillis() - start)/1000f + " seconds.\n" + "Best Agent --> " + bestResult);
 
-        System.out.println("Completed in " + (System.currentTimeMillis() - seed)/1000f + " seconds.\n" + "Best Agent --> " + ga.GetBestAgent().GetFitness());
     }
+
 
     enum DebugMode
     {
@@ -54,5 +72,11 @@ public class Application {
         FILE,
         CONSOLE,
         FILECONSOLE
+    }
+
+    enum HeuristicMode
+    {
+        GA,
+        SA
     }
 }

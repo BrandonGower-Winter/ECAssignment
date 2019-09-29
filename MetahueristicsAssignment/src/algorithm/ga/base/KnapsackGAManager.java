@@ -38,6 +38,9 @@ public class KnapsackGAManager extends GAManager<Boolean> {
         MutateFunction<Boolean> mFunc;
         switch (mOp)
         {
+            case DISPLACEMENT:
+                mFunc = new Displacement<>(randomizer);
+                break;
             case EXCHANGE:
                 mFunc = new Exchange<>(randomizer);
                 break;
@@ -97,7 +100,8 @@ public class KnapsackGAManager extends GAManager<Boolean> {
         EXCHANGE,
         INVERSION,
         INSERTION,
-        REVERSE
+        REVERSE,
+        DISPLACEMENT
     }
 
     public enum SelectionOperator
