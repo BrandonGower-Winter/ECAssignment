@@ -6,6 +6,7 @@ import algorithm.ga.evolution.mutation.Displacement;
 import algorithm.ga.evolution.mutation.Insertion;
 import algorithm.ga.evolution.mutation.Inversion;
 import algorithm.ga.evolution.mutation.Reverse;
+import algorithm.sa.main.SimulatedAnnealing;
 import random.MersenneTwisterFast;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class Application {
     public static void main(String... args)
     {
 
-        HeuristicMode mode = HeuristicMode.GA;
+        HeuristicMode mode = HeuristicMode.SA;
         DebugMode debugMode = DebugMode.CONSOLE;
         long seed = System.currentTimeMillis();
         int capacity = 100;
@@ -52,16 +53,39 @@ public class Application {
             }
 
             if(debugMode == DebugMode.FILE || debugMode == DebugMode.FILECONSOLE)
-                ga.writePopulationReport("./data/Testing/" + seed + ".dat");
+                ga.writePopulationReport("./data/Testing/GA_" + seed + ".dat");
 
             bestResult = ga.GetBestAgent().GetFitness();
         }
         else if(mode == HeuristicMode.SA)
         {
+            long cycleStart = System.currentTimeMillis();
+            SimulatedAnnealing sa = new SimulatedAnnealing(capacity,0.001f, k, new MersenneTwisterFast(seed),SimulatedAnnealing.AnnealMode.DEBUG);
+            int cycle = 0;
+            if(debugMode == DebugMode.CONSOLE || debugMode == DebugMode.FILECONSOLE)
+                System.out.println("Cycle " + cycle + " complete. (" + (System.currentTimeMillis() - cycleStart)/1000f +
+                    "s) --> Best: " + sa.getBestScore() + " Current: " + sa.getCurrentScore() +
+                        " Temperature: " + sa.getTemperature());
+            while (sa.getTemperature() > 1f)
+            {
+                cycleStart = System.currentTimeMillis();
+                sa.doCycle();
+                cycle++;
 
+                if(debugMode == DebugMode.CONSOLE || debugMode == DebugMode.FILECONSOLE)
+                    System.out.println("Cycle " + cycle + " complete. (" + (System.currentTimeMillis() - cycleStart)/1000f +
+                            "s) --> Best: " + sa.getBestScore() + " Current: " + sa.getCurrentScore() +
+                            " Temperature: " + sa.getTemperature());
+
+            }
+
+            if(debugMode == DebugMode.FILE || debugMode == DebugMode.FILECONSOLE)
+                sa.writeReport("./data/Testing/SA_" + seed + ".dat");
+
+            bestResult = sa.getBestScore();
         }
 
-        System.out.println("Completed in " + (System.currentTimeMillis() - start)/1000f + " seconds.\n" + "Best Agent --> " + bestResult);
+        System.out.println("Completed in " + (System.currentTimeMillis() - start)/1000f + " seconds.\n" + "Best Result --> " + bestResult);
 
     }
 
