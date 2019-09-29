@@ -18,7 +18,7 @@ public class Application {
     {
 
         HeuristicMode mode = HeuristicMode.SA;
-        DebugMode debugMode = DebugMode.CONSOLE;
+        DebugMode debugMode = DebugMode.FILECONSOLE;
         long seed = System.currentTimeMillis();
         int capacity = 100;
         int geneLength = Configuration.instance.numberOfItems;

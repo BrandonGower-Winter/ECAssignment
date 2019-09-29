@@ -20,7 +20,7 @@ if __name__ == '__main__':
     #Read Entry
     data_file = open(data_filename,'r')
     data_lines = data_file.readlines()
-    data_values = data_lines[index].split(",")[4].split()
+    data_values = data_lines[index+1].split(",")[4].split()
     data_file.close()
 
     weight = 0;

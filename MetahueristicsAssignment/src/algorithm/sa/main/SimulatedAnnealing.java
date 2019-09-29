@@ -128,7 +128,7 @@ public class SimulatedAnnealing {
 
         if(mode == AnnealMode.DEBUG)
         {
-            logs.add(new AnnealedLog(cycle,temperature,fitnessFunc.CalculateFitness(bestResult),fitnessFunc.CalculateFitness(currentResult)));
+            logs.add(new AnnealedLog(cycle,temperature,fitnessFunc.CalculateFitness(bestResult),fitnessFunc.CalculateFitness(currentResult),bestResult));
         }
 
     }
@@ -158,7 +158,6 @@ public class SimulatedAnnealing {
         return temperature;
     }
 
-
     public void writeReport(String path)
     {
         try (FileWriter fw = new FileWriter(path)) {
@@ -179,16 +178,23 @@ public class SimulatedAnnealing {
         protected float bestScore;
         protected float currentScore;
 
-        public AnnealedLog(int cycle, float temperature, float bestScore, float currentScore) {
+        protected String items = "";
+
+        public AnnealedLog(int cycle, float temperature, float bestScore, float currentScore, ArrayList<Boolean> items) {
             this.cycle = cycle;
             this.temperature = temperature;
             this.bestScore = bestScore;
             this.currentScore = currentScore;
+
+            for(Boolean b : items) {
+                this.items +=  b + " ";
+            }
+            this.items.stripTrailing();
         }
 
         public String toString()
         {
-            return cycle + "," + temperature + "," + bestScore + "," + currentScore  + "\n";
+            return cycle + "," + temperature + "," + bestScore + "," + currentScore + "," + items + "\n";
         }
     }
 
