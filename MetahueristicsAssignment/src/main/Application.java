@@ -22,7 +22,7 @@ public class Application {
         long seed = System.currentTimeMillis();
         int capacity = 100;
         int geneLength = Configuration.instance.numberOfItems;
-        int generations = 150;
+        int generations = 1000;
         Knapsack k = new Knapsack(Configuration.instance.maximumCapacity,"./data/knapsack_instance.csv");
 
         float bestResult = 0;

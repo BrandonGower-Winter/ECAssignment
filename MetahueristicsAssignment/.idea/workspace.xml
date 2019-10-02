@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="016f4cab-f591-4943-8243-5c1e14431634" name="Default Changelist" comment="">
+    <list default="true" id="636cd9a1-4dd8-47f2-af4e-f608991e2530" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/algorithm/sa/main/SimulatedAnnealing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/sa/main/SimulatedAnnealing.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Application.java" afterDir="false" />
@@ -35,7 +36,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
