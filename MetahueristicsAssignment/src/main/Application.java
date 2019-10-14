@@ -1,15 +1,11 @@
 package main;
 
+import algorithm.aco.main.AntColonyOptimization;
 import algorithm.ga.base.GAManager;
 import algorithm.ga.base.KnapsackGAManager;
-import algorithm.ga.evolution.mutation.Displacement;
-import algorithm.ga.evolution.mutation.Insertion;
-import algorithm.ga.evolution.mutation.Inversion;
-import algorithm.ga.evolution.mutation.Reverse;
+import algorithm.ga.evolution.fitness.KnapsackFitnessFunctionSimple;
 import algorithm.sa.main.SimulatedAnnealing;
 import random.MersenneTwisterFast;
-
-import java.util.ArrayList;
 
 public class Application {
     // --- command line ---
@@ -17,12 +13,12 @@ public class Application {
     public static void main(String... args)
     {
 
-        HeuristicMode mode = HeuristicMode.SA;
-        DebugMode debugMode = DebugMode.FILECONSOLE;
+        HeuristicMode mode = HeuristicMode.ACO;
+        DebugMode debugMode = DebugMode.CONSOLE;
         long seed = System.currentTimeMillis();
-        int capacity = 100;
+        int capacity = 1000;
         int geneLength = Configuration.instance.numberOfItems;
-        int generations = 1000;
+        int generations = 100;
         Knapsack k = new Knapsack(Configuration.instance.maximumCapacity,"./data/knapsack_instance.csv");
 
         float bestResult = 0;
@@ -84,6 +80,17 @@ public class Application {
 
             bestResult = sa.getBestScore();
         }
+        else if(mode == HeuristicMode.ACO)
+        {
+            AntColonyOptimization aco = new AntColonyOptimization(k,new MersenneTwisterFast(seed),capacity,0.5f,0.01f,0.80f,0.7f);
+            for(int i = 0; i < generations; i++)
+            {
+                long genStart = System.currentTimeMillis();
+                aco.doGeneration();
+                System.out.println("Generation " + (i+1) + " complete. (" + (System.currentTimeMillis() - genStart)/1000f + "s) --> Best: " + aco.getBestScore() + " Average: " + aco.getAverageScore());
+            }
+            bestResult = aco.getBestScore();
+        }
 
         System.out.println("Completed in " + (System.currentTimeMillis() - start)/1000f + " seconds.\n" + "Best Result --> " + bestResult);
 
@@ -101,6 +108,7 @@ public class Application {
     enum HeuristicMode
     {
         GA,
-        SA
+        SA,
+        ACO
     }
 }

@@ -70,4 +70,53 @@ public class Knapsack
         }
         return weight;
     }
+
+    public ArrayList<Boolean> getEmptyKnapsack()
+    {
+        ArrayList<Boolean> toRet = new ArrayList<>();
+        for(int i = 0; i < lookupTable.size(); i++)
+            toRet.add(false);
+        return  toRet;
+    }
+
+    public String identifier(ArrayList<Boolean> solution)
+    {
+        String toRet = "";
+        for (boolean b : solution)
+        {
+            if (b)
+                toRet+="1";
+            else
+                toRet+="0";
+        }
+        return toRet;
+    }
+
+    public ArrayList<Boolean> createDeepCopy(ArrayList<Boolean> array)
+    {
+        ArrayList<Boolean> deepCopy = new ArrayList<>();
+        for(Boolean b : array)
+        {
+            if(b)
+                deepCopy.add(true);
+            else
+                deepCopy.add(false);
+        }
+        return deepCopy;
+    }
+
+    public ArrayList<Boolean> construct(String representation)
+    {
+        ArrayList<Boolean> toRet = new ArrayList<>();
+        for(char c : representation.toCharArray())
+        {
+            if(c == '1')
+                toRet.add(true);
+            else
+                toRet.add(false);
+        }
+        return toRet;
+    }
+
+
 }
