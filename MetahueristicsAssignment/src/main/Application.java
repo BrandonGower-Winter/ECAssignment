@@ -4,6 +4,7 @@ import algorithm.aco.main.AntColonyOptimization;
 import algorithm.ga.base.GAManager;
 import algorithm.ga.base.KnapsackGAManager;
 import algorithm.ga.evolution.fitness.KnapsackFitnessFunctionSimple;
+import algorithm.pso.main.ParticleSwarmOptimization;
 import algorithm.sa.main.SimulatedAnnealing;
 import random.MersenneTwisterFast;
 
@@ -13,12 +14,12 @@ public class Application {
     public static void main(String... args)
     {
 
-        HeuristicMode mode = HeuristicMode.ACO;
+        HeuristicMode mode = HeuristicMode.PSO;
         DebugMode debugMode = DebugMode.CONSOLE;
         long seed = System.currentTimeMillis();
-        int capacity = 1000;
+        int capacity = 100;
         int geneLength = Configuration.instance.numberOfItems;
-        int generations = 100;
+        int generations = 200;
         Knapsack k = new Knapsack(Configuration.instance.maximumCapacity,"./data/knapsack_instance.csv");
 
         float bestResult = 0;
@@ -91,6 +92,17 @@ public class Application {
             }
             bestResult = aco.getBestScore();
         }
+        else if(mode == HeuristicMode.PSO)
+        {
+            ParticleSwarmOptimization pso = new ParticleSwarmOptimization(capacity,4f,-4f,0.5f,0.5f,1f,k,new MersenneTwisterFast(seed));
+            for(int i = 0; i < generations; i++)
+            {
+                long genStart = System.currentTimeMillis();
+                pso.run();
+                System.out.println("Generation " + (i+1) + " complete. (" + (System.currentTimeMillis() - genStart)/1000f + "s) --> Best: " + pso.getBestScore() + " Average: " + pso.getAverageScore());
+            }
+            bestResult = pso.getBestScore();
+        }
 
         System.out.println("Completed in " + (System.currentTimeMillis() - start)/1000f + " seconds.\n" + "Best Result --> " + bestResult);
 
@@ -109,6 +121,7 @@ public class Application {
     {
         GA,
         SA,
-        ACO
+        ACO,
+        PSO
     }
 }

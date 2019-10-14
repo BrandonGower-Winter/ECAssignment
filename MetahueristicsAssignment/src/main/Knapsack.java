@@ -92,7 +92,7 @@ public class Knapsack
         return toRet;
     }
 
-    public ArrayList<Boolean> createDeepCopy(ArrayList<Boolean> array)
+    public static ArrayList<Boolean> createDeepCopy(ArrayList<Boolean> array)
     {
         ArrayList<Boolean> deepCopy = new ArrayList<>();
         for(Boolean b : array)
