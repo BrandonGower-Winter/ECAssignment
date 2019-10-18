@@ -3,10 +3,9 @@ import sys
 if __name__ == '__main__':
 
     knapsack_filename = sys.argv[1]
-    data_filename = sys.argv[2]
+    encoding = list(sys.argv[2])
     maxWeight = 822
     optimum = 1013
-    index = int(sys.argv[3])
 
     knapsack = {}
 
@@ -17,17 +16,12 @@ if __name__ == '__main__':
         knapsack[int(values[0])] = [int(values[1]),int(values[2])]
 
     knapsack_file.close()
-    #Read Entry
-    data_file = open(data_filename,'r')
-    data_lines = data_file.readlines()
-    data_values = data_lines[index+1].split(",")[4].split()
-    data_file.close()
 
     weight = 0;
     value = 0;
 
-    for i in range(0,len(data_values)):
-        if(data_values[i] == 'true'):
+    for i in range(0,len(encoding)):
+        if encoding[i] == '1':
             weight += knapsack[i+1][0]
             value += knapsack[i+1][1]
 

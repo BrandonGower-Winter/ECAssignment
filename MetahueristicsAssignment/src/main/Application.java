@@ -39,6 +39,7 @@ public class Application {
         {
             long start = System.currentTimeMillis();
             float bestResult = 0;
+            String solutionEncoding = "";
             if(Configuration.instance.mode == HeuristicMode.GA)
             {
                 //Load Configuration
@@ -114,6 +115,7 @@ public class Application {
 
                 //set best result
                 bestResult = ga.GetBestAgent().GetFitness();
+                solutionEncoding = k.identifier(ga.GetBestAgent().GetGene());
             }
             else if(Configuration.instance.mode == HeuristicMode.SA)
             {
@@ -149,6 +151,7 @@ public class Application {
 
                 //Set best score
                 bestResult = sa.getBestScore();
+                solutionEncoding = k.identifier(sa.getBestResult());
             }
             else if(Configuration.instance.mode == HeuristicMode.ACO)
             {
@@ -172,6 +175,7 @@ public class Application {
 
                 //Store Best Result
                 bestResult = aco.getBestScore();
+                solutionEncoding = k.identifier(aco.getBest());
             }
             else if(Configuration.instance.mode == HeuristicMode.PSO)
             {
@@ -193,10 +197,11 @@ public class Application {
                 }
                 //Store best result
                 bestResult = pso.getBestScore();
+                solutionEncoding = k.identifier(pso.getBestSolution());
             }
 
             //Print out best result
-            System.out.println("Completed in " + (System.currentTimeMillis() - start)/1000f + " seconds.\nSeed:" + seed + "\nBest Result --> " + bestResult);
+            System.out.println("Completed in " + (System.currentTimeMillis() - start)/1000f + " seconds.\nSeed:" + seed + "\nBest Result --> " + bestResult + "\nEncoding: " + solutionEncoding);
         }
         else //Search for best configuration
         {

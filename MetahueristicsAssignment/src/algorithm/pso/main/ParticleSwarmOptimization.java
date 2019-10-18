@@ -63,6 +63,10 @@ public class ParticleSwarmOptimization
     {
         return f.CalculateFitness(bestSolution);
     }
+    public ArrayList<Boolean> getBestSolution()
+    {
+        return bestSolution;
+    }
 
     public float getAverageScore()
     {
