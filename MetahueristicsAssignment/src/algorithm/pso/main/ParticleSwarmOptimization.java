@@ -33,7 +33,7 @@ public class ParticleSwarmOptimization
         this.randomizer = randomizer;
         this.innertia = innertia;
         bestSolution = null;
-        for(int i = 0; i < count; i++)
+        for(int i = 0; i < count; i++) //Create Particles
         {
             particles[i] = new Particle(k.GetTable().size(),maxV,minV,innertia,randomizer,k,f);
             if(bestSolution == null || f.CalculateFitness(bestSolution) < particles[i].getFitness())

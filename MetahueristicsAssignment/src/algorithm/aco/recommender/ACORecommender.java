@@ -32,6 +32,7 @@ public class ACORecommender {
         this.exploreRate = exploreRate;
     }
 
+    //Reads ACO config files
     public void readFile(String file)
     {
         try {
@@ -48,6 +49,7 @@ public class ACORecommender {
         }
     }
 
+    //Writes ACO config files
     public void writeFile(boolean best)
     {
         String file = best ? "ACO_BEST.xml" : "ACO_DEFAULT.xml";

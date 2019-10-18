@@ -15,13 +15,12 @@ public class Reverse<T> extends MutateFunction<T>
     @Override
     public void Mutate(ArrayList<T> gene)
     {
-        int index = randomizer.nextInt(gene.size());
+        int index = randomizer.nextInt(gene.size()); //Get index
         List<T> sublist = gene.subList(index,gene.size());
-
-        Collections.reverse(sublist);
+        Collections.reverse(sublist); //Reverse sublist
         for(int i = 0; i < sublist.size(); i++)
         {
-            gene.set(i + index,sublist.get(i));
+            gene.set(i + index,sublist.get(i)); //Set new values
         }
     }
 }

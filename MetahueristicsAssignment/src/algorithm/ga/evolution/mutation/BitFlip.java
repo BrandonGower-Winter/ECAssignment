@@ -15,7 +15,7 @@ public class BitFlip extends MutateFunction<Boolean>
     @Override
     public void Mutate(ArrayList<Boolean> gene)
     {
-        int index = randomizer.nextInt(gene.size());
-        gene.set(index,!gene.get(index));
+        int index = randomizer.nextInt(gene.size()); //Pick a random index in the gene
+        gene.set(index,!gene.get(index)); //Flip it
     }
 }

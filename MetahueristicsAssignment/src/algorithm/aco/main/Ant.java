@@ -5,6 +5,7 @@ import main.Knapsack;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//Ant class used to lay pheromone on knapsack items
 public class Ant
 {
 
@@ -12,9 +13,8 @@ public class Ant
     private Knapsack k;
     private int noOfItems;
 
-    public Ant(Knapsack k)
+    public Ant(Knapsack k) //Constructor
     {
-
         this.k = k;
         noOfItems = 0;
         path = k.getEmptyKnapsack();
@@ -37,6 +37,7 @@ public class Ant
         return noOfItems;
     }
 
+    //Iterate through all items and lay pheromone on each item
     public void layPheromone(float pheromone, HashMap<Integer,Float> pheromoneTable)
     {
         for(int i = 0; i < path.size(); i++)

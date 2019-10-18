@@ -16,14 +16,16 @@ public class Exchange<T> extends MutateFunction<T>
     @Override
     public void Mutate(ArrayList<T> gene)
     {
+        //Get two indices
         int firstIndex = randomizer.nextInt(gene.size());
         int secondIndex = randomizer.nextInt(gene.size());
 
-        while(firstIndex == secondIndex)
+        while(firstIndex == secondIndex) //ensure they are unequal
         {
             secondIndex = randomizer.nextInt(gene.size());
         }
 
+        //Swap the two alleles
         T tempAllele = gene.get(firstIndex);
         gene.set(firstIndex,gene.get(secondIndex));
         gene.set(secondIndex,tempAllele);

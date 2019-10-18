@@ -46,14 +46,16 @@ public class AntColonyOptimization
         }
     }
 
-    public void doGeneration()
+    public void doGeneration() //Simulates one iteration of ant exploration
     {
+        //Decay pheromone
         for(int id : pheromoneMap.keySet())
         {
             pheromoneMap.put(id,pheromoneMap.get(id) * pheromoneDecay);
         }
-        Ant ants[] = new Ant[numAnts];
+
         //Generate ants and let them find a solution
+        Ant ants[] = new Ant[numAnts];
         for(int i = 0; i < ants.length; i++)
         {
             //Make ant
@@ -65,7 +67,7 @@ public class AntColonyOptimization
                 ants[i].add(nextItem);
                 nextItem = getNextLoc(ants[i]);
             }
-
+            //Compare ant performance to best ant
             if(f.CalculateFitness(best) < f.CalculateFitness(ants[i].getSolution()))
             {
                 best = ants[i].getSolution();
@@ -76,14 +78,15 @@ public class AntColonyOptimization
         //Lay Pheromones
         for(Ant a : ants)
         {
-            average += f.CalculateFitness(a.getSolution());
+            average += f.CalculateFitness(a.getSolution()); //Lay Pheromone equal to the value the any achieved
             a.layPheromone(f.CalculateFitness(a.getSolution()),pheromoneMap);
         }
         average/=numAnts;
     }
 
-    private int getNextLoc(Ant ant)
+    private int getNextLoc(Ant ant) //Gets the next location for an ant to travel
     {
+        //Get a list of valid items that can be put into the Knapsack
         ArrayList<Integer> validOptions = new ArrayList<>();
         float antWeight = k.GetWeight(ant.getSolution());
         for(int i = 0; i < ant.getSolution().size(); i++)
@@ -94,10 +97,11 @@ public class AntColonyOptimization
                 validOptions.add(i);
             }
         }
-        if(validOptions.size() == 0)
+
+        if(validOptions.size() == 0) //No more valid options remain
             return -1;
 
-        if(randomizer.nextFloat() < 1 - exploreRate)
+        if(randomizer.nextFloat() < 1 - exploreRate) //Generate a random number to determine whether the ant will pick a random option or whether it'll follow the pheromones
         {
             //Follow Pheromone
             float totalPheromone = 0.0f;
@@ -105,14 +109,19 @@ public class AntColonyOptimization
             {
                 totalPheromone += pheromoneMap.get(i);
             }
+
+            //Create a probability distribution of the total pheromone values (Similar to roulettte wheel in GA)
             float totalProb = 0.0f;
             double[] values = new double[validOptions.size()];
             for(int i = 0; i < validOptions.size(); i++)
             {
                 KnapsackItem item = k.GetTable().get(validOptions.get(i));
+                //This is the probability function highlighted in the slides. The desirability is value/weight^2. This makes it so that the weight of an object has more influence that its value
                 values[i] = Math.pow(pheromoneMap.get(validOptions.get(i))/totalPheromone,alpha) * Math.pow(item.GetValue()/Math.pow(item.GetWeight(),2),beta);
                 totalProb+=values[i];
             }
+            //Create a roulette wheel of probabilities for the calculates probabilities values[];
+            //This is because line 120 creates many small probabilities that frequently result in random selection. This method guarantees an item is chosen according to how strong the pheromones on that item are.
             float totalProbProb = 0.0f;
             float[] probabilitySum = new float[validOptions.size()];
             for(int i = 0; i < validOptions.size(); i++)
@@ -120,6 +129,7 @@ public class AntColonyOptimization
                 totalProbProb += values[i]/totalProb;
                 probabilitySum[i] = totalProbProb;
             }
+            //Select a valid option
             float randomNum = randomizer.nextFloat();
             for(int i = 0; i < validOptions.size(); i++)
             {

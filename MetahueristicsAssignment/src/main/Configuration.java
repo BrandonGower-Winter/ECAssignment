@@ -17,18 +17,18 @@ public enum Configuration {
     public int maximumCapacity = 822;
     public int bestKnownOptimum = 1013;
 
-    public HeuristicMode mode = HeuristicMode.GA;
-    public DebugMode dMode = DebugMode.NONE;
-    public Config configuration = Config.DEFAULT;
+    public HeuristicMode mode = HeuristicMode.GA; //Program defaults to GA
+    public DebugMode dMode = DebugMode.NONE; //Defaults to no debug mode
+    public Config configuration = Config.DEFAULT; //Defaults to default configuration
 
-    public boolean searchBest = false;
+    public boolean searchBest = false; //Used to determine whether configuration search was selected
 
 
     public void Configure(String args[], long seed)
     {
-        randomGenerator.setSeed(seed);
+        randomGenerator.setSeed(seed); //Set Random Number Generator
 
-        for(int i = 0; i < args.length; i++)
+        for(int i = 0; i < args.length; i++) //Parse Parameters
         {
             switch (args[i])
             {
@@ -93,7 +93,7 @@ public enum Configuration {
 
 }
 
-enum DebugMode
+enum DebugMode //An enum used to determine the output conditions
 {
     NONE,
     FILE,
@@ -101,7 +101,7 @@ enum DebugMode
     FILECONSOLE
 }
 
-enum HeuristicMode
+enum HeuristicMode //Enum  of the Algorithms implemented in this assignment
 {
     GA,
     SA,
@@ -109,7 +109,7 @@ enum HeuristicMode
     PSO
 }
 
-enum Config
+enum Config //Enum for keeping track of which Configuration to use
 {
     DEFAULT,
     BEST

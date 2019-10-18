@@ -14,6 +14,7 @@ import algorithm.ga.evolution.selection.Tournament;
 import main.Knapsack;
 import random.MersenneTwisterFast;
 
+//This is the GA for Knapsack problem it extends the GAManager
 public class KnapsackGAManager extends GAManager<Boolean> {
 
     private Knapsack knapsack;
@@ -28,6 +29,7 @@ public class KnapsackGAManager extends GAManager<Boolean> {
         this.knapsack = knapsack;
     }
 
+    //This function makes use of enums to make it easier to create a KnapsackGA outside of this class
     public static KnapsackGAManager KnapsackCreator(int capacity, int geneLength, Knapsack knapsack,
                                                       MersenneTwisterFast randomizer,
                                                       float mutationRate , MutationOperator mOp,
@@ -54,6 +56,7 @@ public class KnapsackGAManager extends GAManager<Boolean> {
                 mFunc = new BitFlip(randomizer);
 
         }
+        //Create CrossOver
         CrossOverFunction<Boolean> cFunc;
         switch (cOp)
         {
@@ -63,7 +66,7 @@ public class KnapsackGAManager extends GAManager<Boolean> {
             default:
                 cFunc = new OnePointCrossover<>(randomizer);
         }
-
+        //Create Selection
         SelectionFunction<Boolean> sFunc;
         switch (sOp)
         {

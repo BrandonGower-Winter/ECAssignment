@@ -25,6 +25,7 @@ public class SARecommender
         this.coolingRate = coolingRate;
     }
 
+    //Read SA Configurations
     public void readFile(String file)
     {
         try {
@@ -36,7 +37,7 @@ public class SARecommender
             System.out.println("File " +  file + " not found. Could not load recommender.");
         }
     }
-
+    //Write SA Configurations
     public void writeFile(boolean best)
     {
         String file = best ? "SA_BEST.xml" : "SA_DEFAULT.xml";

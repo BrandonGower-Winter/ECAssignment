@@ -2,20 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="636cd9a1-4dd8-47f2-af4e-f608991e2530" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/data/Recommenders/ACO_DEFAULT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/Recommenders/GA_BEST.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/Recommenders/GA_DEFAULT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/Recommenders/PSO_BEST.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/Recommenders/PSO_DEFAULT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/Recommenders/SA_DEFAULT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/algorithm/aco/recommender/ACORecommender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/algorithm/ga/recommender/GARecommender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/algorithm/pso/recommender/PSORecommender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/algorithm/sa/recommender/SARecommender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/aco/main/Ant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/aco/main/Ant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/aco/main/AntColonyOptimization.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/aco/main/AntColonyOptimization.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/aco/recommender/ACORecommender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/aco/recommender/ACORecommender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/algorithm/ga/base/GAManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/base/GAManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/base/GeneticAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/base/GeneticAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/base/KnapsackGAManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/base/KnapsackGAManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/crossover/CrossOverFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/crossover/CrossOverFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/crossover/KPointCrossover.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/crossover/KPointCrossover.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/crossover/OnePointCrossover.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/crossover/OnePointCrossover.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/fitness/FitnessFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/fitness/FitnessFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/fitness/KnapsackFitnessFunctionSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/fitness/KnapsackFitnessFunctionSimple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/BitFlip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/BitFlip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/Displacement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/Displacement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/Exchange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/Exchange.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/Insertion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/Insertion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/Inversion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/Inversion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/MutateFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/MutateFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/Reverse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/mutation/Reverse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/recommender/GARecommender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/recommender/GARecommender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/pso/main/Particle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/pso/main/Particle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/pso/main/ParticleSwarmOptimization.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/pso/main/ParticleSwarmOptimization.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/pso/recommender/PSORecommender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/pso/recommender/PSORecommender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/sa/main/SimulatedAnnealing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/sa/main/SimulatedAnnealing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/sa/recommender/SARecommender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/sa/recommender/SARecommender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Configuration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Knapsack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Knapsack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/KnapsackItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/KnapsackItem.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

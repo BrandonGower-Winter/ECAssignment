@@ -31,7 +31,7 @@ public class PSORecommender
         this.c2 = c2;
         this.inertia = inertia;
     }
-
+    //Read PSO Configuration
     public void readFile(String file)
     {
         try {
@@ -48,7 +48,7 @@ public class PSORecommender
             System.out.println("File " +  file + " not found. Could not load recommender.");
         }
     }
-
+    //Write PSO Configuration
     public void writeFile(boolean best)
     {
         String file = best ? "PSO_BEST.xml" : "PSO_DEFAULT.xml";

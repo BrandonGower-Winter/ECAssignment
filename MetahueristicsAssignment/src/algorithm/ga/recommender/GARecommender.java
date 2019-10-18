@@ -39,7 +39,7 @@ public class GARecommender
         else
             readFile("GA_DEFAULT.xml");
     }
-
+    //Read GA Configurations
     public void readFile(String file)
     {
         try {
@@ -58,6 +58,7 @@ public class GARecommender
         }
     }
 
+    //Write GA Configurations
     public void writeFile(boolean best)
     {
         String file = best ? "GA_BEST.xml" : "GA_DEFAULT.xml";

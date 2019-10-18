@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//This is a generic implementation of a Genetic Algorithm
 public class GAManager<T>
 {
     protected int capacity;
@@ -53,6 +54,7 @@ public class GAManager<T>
         SetFunctors(fFunc,cFunc,mFunc,sFunc);
         InitPopulation();
     }
+    //Initializes a population
     protected void InitPopulation()
     {
         for(int i = 0; i < capacity; i++)
@@ -65,6 +67,7 @@ public class GAManager<T>
         }
     }
 
+    //Sets the function objects that are used in the algorithm
     public void SetFunctors(FitnessFunction fFunc, CrossOverFunction cFunc, MutateFunction mFunc, SelectionFunction sFunc)
     {
         fitnessFunc = fFunc;
@@ -73,9 +76,11 @@ public class GAManager<T>
         selectionFunc = sFunc;
     }
 
+    //Run through one cylce of the Genetic Algorithm
     public void DoCylce()
     {
-        population.sort(GeneticAgent::compareTo);
+        population.sort(GeneticAgent::compareTo); //Sort population from best to worst
+        //Copy across some configurable number of best solutions (ie: Elitism)
         int numChildren = population.size() - Math.round(population.size() * elitismRatio);
         ArrayList<GeneticAgent<T>> newPopulation = new ArrayList<>(population.subList(0, population.size() - numChildren));
         //Selection
@@ -93,7 +98,7 @@ public class GAManager<T>
                     }
                     if(child.GetFitness() < 0)
                     {
-                        geneRandomizer.MakeGeneValid(child);
+                        geneRandomizer.MakeGeneValid(child); //This is needed to make invalid children valid
                     }
                     newPopulation.add(child);
                 }

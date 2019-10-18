@@ -43,27 +43,29 @@ public class SimulatedAnnealing {
     }
 
 
+    //Calculates the probability of accepting a new solution given its fitness relative to the current fitness
     protected boolean acceptByProbability(float oldFitness, float newFitness)
     {
-        if(newFitness > oldFitness)
+        if(newFitness > oldFitness) //If it is better then accept immediately
         {
             return true;
         }
-        else
+        else //If it is worse
         {
             float delta = oldFitness - newFitness;
-            double probability  = Math.exp(-delta /temperature);
+            double probability  = Math.exp(-delta /temperature); //Boltzman Distribution function
             return probability > randomizer.nextDouble();
         }
     }
 
 
+    //Gets a new solution to compare to the current solution
     public ArrayList<Boolean> getNewSolution()
     {
-        ArrayList<Boolean> newSol = createDeepCopy(currentResult);
-        // Add/Remove random item.
+        ArrayList<Boolean> newSol = Knapsack.createDeepCopy(currentResult);
+        // Add/Remove random item from the bad and ensure that it does not make an invalid solution.
         int index = randomizer.nextInt(newSol.size());
-        if(!newSol.get(index))
+        if(!newSol.get(index)) //Item not in knapsack
         {
             while (knapsack.GetWeight(newSol) + knapsack.GetTable().get(index).GetWeight() > knapsack.GetMaxWeight())
             {
@@ -71,10 +73,9 @@ public class SimulatedAnnealing {
                 if(newSol.get(remIndex))
                     newSol.set(remIndex,false);
             }
-
             newSol.set(index, true);
         }
-        else
+        else //Item in knapsack
         {
              newSol.set(index,false);
              index = randomizer.nextInt(newSol.size());
@@ -83,7 +84,6 @@ public class SimulatedAnnealing {
                  index = randomizer.nextInt(newSol.size());
              }
              newSol.set(index,true);
-
              while (knapsack.GetWeight(newSol) > knapsack.GetMaxWeight())
              {
                  index = randomizer.nextInt(newSol.size());
@@ -94,36 +94,25 @@ public class SimulatedAnnealing {
         return  newSol;
     }
 
-    private ArrayList<Boolean> createDeepCopy(ArrayList<Boolean> array)
-    {
-        ArrayList<Boolean> deepCopy = new ArrayList<>();
-        for(Boolean b : array)
-        {
-            if(b)
-                deepCopy.add(true);
-            else
-                deepCopy.add(false);
-        }
-        return deepCopy;
-    }
-
     public void doCycle()
     {
+        //Create a new solution
         ArrayList<Boolean> newSolution = getNewSolution();
+        //Calculate their energies
         float currentEnergy = fitnessFunc.CalculateFitness(currentResult);
         float newEnergy = fitnessFunc.CalculateFitness(newSolution);
-
+        //Accept by the probability function
         if(acceptByProbability(currentEnergy,newEnergy))
         {
             currentResult = newSolution;
         }
-
+        //Compare fitness to current best
         if(fitnessFunc.CalculateFitness(currentResult) > fitnessFunc.CalculateFitness(bestResult))
         {
             bestResult = currentResult;
         }
 
-        temperature *= (1-coolingRate);
+        temperature *= (1-coolingRate); //Cool down temperature
         cycle++;
 
         if(mode == AnnealMode.DEBUG)

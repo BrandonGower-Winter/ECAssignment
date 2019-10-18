@@ -4,7 +4,7 @@ import random.MersenneTwisterFast;
 
 import java.util.ArrayList;
 
-//I assumed this mean flipping bits from a certain point. The slides didn't say what this was.
+//I assumed this mean flipping bits up until a certain points. The slides didn't say what this was.
 
 public class Inversion extends MutateFunction<Boolean> {
     public Inversion(MersenneTwisterFast randomizer) {
@@ -13,9 +13,21 @@ public class Inversion extends MutateFunction<Boolean> {
 
     @Override
     public void Mutate(ArrayList<Boolean> gene) {
-        int index = randomizer.nextInt(gene.size());
+        //Get two indices
+        int firstIndex = randomizer.nextInt(gene.size());
+        int secondIndex = randomizer.nextInt(gene.size());
+        while (firstIndex == secondIndex) //ensure they are unequal
+        {
+            secondIndex = randomizer.nextInt(gene.size());
+        }
 
-        for(int i = index; i < gene.size(); i++)
+        if(secondIndex < firstIndex) //and that firstIndex is < secondIndex
+        {
+            int temp = firstIndex;
+            firstIndex = secondIndex;
+            secondIndex = temp;
+        }
+        for(int i = firstIndex; i <= secondIndex; i++) //Invert the allele values
         {
             gene.set(i,!gene.get(i));
         }

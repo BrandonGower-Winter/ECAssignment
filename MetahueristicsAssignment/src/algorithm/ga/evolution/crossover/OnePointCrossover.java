@@ -5,6 +5,7 @@ import random.MersenneTwisterFast;
 
 import java.util.ArrayList;
 
+//Generic Implementation of OnePointCrossOver
 public class OnePointCrossover<T> extends CrossOverFunction<T> {
 
     private MersenneTwisterFast randomizer;
@@ -18,12 +19,12 @@ public class OnePointCrossover<T> extends CrossOverFunction<T> {
     public ArrayList<ArrayList<T>> CrossOver(ArrayList<T> parent, ArrayList<T> otherParent)
     {
         ArrayList<ArrayList<T>> children = new ArrayList<>();
-        int crossover = randomizer.nextInt(parent.size()-1);
+        int crossover = randomizer.nextInt(parent.size()-1); //Choose CrossOver
 
         children.add(new ArrayList<T>()); //First Child
         children.add(new ArrayList<T>()); //Second Child
 
-        for(int i = 0; i < parent.size(); i++)
+        for(int i = 0; i < parent.size(); i++) //WHen i = crossover swap allocation of alleles from one parent to another
         {
             if(i < crossover)
             {

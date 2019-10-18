@@ -8,6 +8,7 @@ import algorithm.ga.evolution.randomizer.GeneRandomizer;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+//Generic Implementation of a solution in the population
 public class GeneticAgent<T> implements Comparable
 {
     private ArrayList<T> gene;
@@ -29,7 +30,7 @@ public class GeneticAgent<T> implements Comparable
         return fitnessFunction.CalculateFitness(gene);
     }
 
-    public ArrayList<GeneticAgent<T>> Crossover(GeneticAgent<T> parent)
+    public ArrayList<GeneticAgent<T>> Crossover(GeneticAgent<T> parent) //Apply crossover function to this gene and another parent
     {
         ArrayList<GeneticAgent<T>> children = new ArrayList<>();
         ArrayList<ArrayList<T>> genes = crossOverFunction.CrossOver(gene,parent.GetGene());
@@ -38,6 +39,7 @@ public class GeneticAgent<T> implements Comparable
         }
         return children;
     }
+    //Mutate this solution
     public void Mutate()
     {
         mutateFunction.Mutate(gene);

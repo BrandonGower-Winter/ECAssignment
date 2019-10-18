@@ -1,5 +1,6 @@
 package main;
 
+//A simple class for storing Knapsack items. Stores value and Weight
 public class KnapsackItem {
 
     private int weight;

@@ -18,19 +18,22 @@ public class Application {
     // -algorithm [ga | sa | aco | pso | best-algorithm] -configuration [default | best] -search_best_configuration
     public static void main(String... args)
     {
+        //Get and set seed for running
         long seed = System.currentTimeMillis();
-        Configuration.instance.Configure(args,seed);
+        Configuration.instance.Configure(args,seed); //Parse Arguments
 
         //Load Knapsack
         int geneLength = Configuration.instance.numberOfItems;
         Knapsack k = new Knapsack(Configuration.instance.maximumCapacity,"./data/knapsack_instance.csv");
 
+        //Write Knapsack details
         if(Configuration.instance.dMode == DebugMode.CONSOLE || Configuration.instance.dMode == DebugMode.FILECONSOLE)
         {
             System.out.println("Knapsack Generated:");
             System.out.println("Max Weight: " + k.GetMaxWeight());
             System.out.println("# of Items: " + k.GetTable().size());
         }
+
         //Use Algorithm
         if(!Configuration.instance.searchBest)
         {
@@ -38,6 +41,7 @@ public class Application {
             float bestResult = 0;
             if(Configuration.instance.mode == HeuristicMode.GA)
             {
+                //Load Configuration
                 GARecommender gaRecommender = new GARecommender(Configuration.instance.configuration == Config.BEST);
                 System.out.println("Genetic Algorithm:\nCapacity:" + gaRecommender.capacity + "\nGenerations:" + gaRecommender.generations  + "\nElitism RAte:" + gaRecommender.elitismRatio
                         + "\nMutationRate:" + gaRecommender.mutationRate + "\nCrossoverRate:" + gaRecommender.crossoverRate
@@ -88,11 +92,13 @@ public class Application {
                         cOP = KnapsackGAManager.CrossoverOperator.ONEPOINT;
                 }
 
+                //Load Genetic Algorithm Manager
                 KnapsackGAManager ga = KnapsackGAManager.KnapsackCreator(gaRecommender.capacity,geneLength,k,Configuration.instance.randomGenerator,
                         gaRecommender.mutationRate, mOp,gaRecommender.elitismRatio,sOp,
                         gaRecommender.crossoverRate,cOP, GAManager.GAMODE.DEBUG);
 
                 long genStart;
+                //Simulate n generations
                 for(int i = 0; i < gaRecommender.generations; i++)
                 {
                     genStart = System.currentTimeMillis();
@@ -102,22 +108,29 @@ public class Application {
                                 " Average: " + ga.GetAverageFitness() + " Lowest: " + ga.GetLowestFitness());
                 }
 
+                //Write Summary to file
                 if(Configuration.instance.dMode == DebugMode.FILE || Configuration.instance.dMode == DebugMode.FILECONSOLE)
                     ga.writePopulationReport("./data/Testing/GA_" + seed + ".dat");
 
+                //set best result
                 bestResult = ga.GetBestAgent().GetFitness();
             }
             else if(Configuration.instance.mode == HeuristicMode.SA)
             {
+                //Load Configuration
                 SARecommender saRecommender = new SARecommender(Configuration.instance.configuration == Config.BEST);
+
                 System.out.println("Simulated Annealing:\nTemperature:" + saRecommender.temperature + "\nCooling Rate:" + saRecommender.coolingRate + "\n-------------------------------------------------");
                 long cycleStart = System.currentTimeMillis();
+                //Create Simulated Annealing Instance
                 SimulatedAnnealing sa = new SimulatedAnnealing(saRecommender.temperature,saRecommender.coolingRate, k, Configuration.instance.randomGenerator,SimulatedAnnealing.AnnealMode.DEBUG);
                 int cycle = 0;
                 if(Configuration.instance.dMode == DebugMode.CONSOLE || Configuration.instance.dMode == DebugMode.FILECONSOLE)
                     System.out.println("Cycle " + cycle + " complete. (" + (System.currentTimeMillis() - cycleStart)/1000f +
                             "s) --> Best: " + sa.getBestScore() + " Current: " + sa.getCurrentScore() +
                             " Temperature: " + sa.getTemperature());
+
+                //Run the simulated annealing algorithm
                 while (sa.getTemperature() > 1f)
                 {
                     cycleStart = System.currentTimeMillis();
@@ -130,19 +143,25 @@ public class Application {
                                 " Temperature: " + sa.getTemperature());
 
                 }
-
+                //Write Summary to file
                 if(Configuration.instance.dMode == DebugMode.FILE || Configuration.instance.dMode == DebugMode.FILECONSOLE)
                     sa.writeReport("./data/Testing/SA_" + seed + ".dat");
 
+                //Set best score
                 bestResult = sa.getBestScore();
             }
             else if(Configuration.instance.mode == HeuristicMode.ACO)
             {
+                //Load Configuration
                 ACORecommender acoRecommender = new ACORecommender(Configuration.instance.configuration == Config.BEST);
                 System.out.println("Ant Colony Optimization:\nNumAnts:" + acoRecommender.numAnts + "\nGenerations:" + acoRecommender.generations + "\nalpha:" + acoRecommender.alpha +
                         "\nbeta:" + acoRecommender.beta + "\npheromoneDecay:" + acoRecommender.pheromoneDecay + "\nexploreRate:" + acoRecommender.exploreRate + "\n-------------------------------------------------");
+
+                //Create Ant Colony Optimization
                 AntColonyOptimization aco = new AntColonyOptimization(k,Configuration.instance.randomGenerator,acoRecommender.numAnts,acoRecommender.pheromoneDecay,
                         acoRecommender.exploreRate,acoRecommender.alpha,acoRecommender.beta);
+
+                //Run algorithm
                 for(int i = 0; i < acoRecommender.generations; i++)
                 {
                     long genStart = System.currentTimeMillis();
@@ -150,15 +169,21 @@ public class Application {
                     if(Configuration.instance.dMode == DebugMode.CONSOLE || Configuration.instance.dMode == DebugMode.FILECONSOLE)
                         System.out.println("Generation " + (i+1) + " complete. (" + (System.currentTimeMillis() - genStart)/1000f + "s) --> Best: " + aco.getBestScore() + " Average: " + aco.getAverageScore());
                 }
+
+                //Store Best Result
                 bestResult = aco.getBestScore();
             }
             else if(Configuration.instance.mode == HeuristicMode.PSO)
             {
+                //Load Configuration
                 PSORecommender psoRecommender = new PSORecommender(Configuration.instance.configuration == Config.BEST);
                 System.out.println("Particle Swarm Optimization:\nNumParticles:" + psoRecommender.numParticles + "\nGenerations:" + psoRecommender.generations + "\nminV:" + psoRecommender.minV +
                         "\nmaxV:" + psoRecommender.maxV + "\nc1:" + psoRecommender.c1 + "\nc2:" + psoRecommender.c2 + "\ninertia:" + psoRecommender.inertia + "\n-------------------------------------------------");
+
+                //Create Particle Swarm Optimization
                 ParticleSwarmOptimization pso = new ParticleSwarmOptimization(psoRecommender.numParticles,psoRecommender.maxV,psoRecommender.minV,
                         psoRecommender.c1,psoRecommender.c2,psoRecommender.inertia,k,Configuration.instance.randomGenerator);
+                //Run Algorithm
                 for(int i = 0; i < psoRecommender.generations; i++)
                 {
                     long genStart = System.currentTimeMillis();
@@ -166,14 +191,15 @@ public class Application {
                     if(Configuration.instance.dMode == DebugMode.CONSOLE || Configuration.instance.dMode == DebugMode.FILECONSOLE)
                         System.out.println("Generation " + (i+1) + " complete. (" + (System.currentTimeMillis() - genStart)/1000f + "s) --> Best: " + pso.getBestScore() + " Average: " + pso.getAverageScore());
                 }
+                //Store best result
                 bestResult = pso.getBestScore();
             }
 
+            //Print out best result
             System.out.println("Completed in " + (System.currentTimeMillis() - start)/1000f + " seconds.\nSeed:" + seed + "\nBest Result --> " + bestResult);
         }
-        else
+        else //Search for best configuration
         {
-            //Search for best algorithm
             if(Configuration.instance.mode == HeuristicMode.SA)
             {
                 System.out.println("Starting search for best SA configuration...");
@@ -216,21 +242,22 @@ public class Application {
         float bestPhDecay = 0.0f;
         float bestExploreRate = 0.0f;
 
-        for(int i = 10; i <= 100; i+=10) {
-            for (float alpha = 0.5f; alpha <= 1.0f; alpha += 0.05f) {
-                for (float beta = 0.5f; beta <= 1.0f; beta += 0.05) {
-                    for (float phDecay = 0.05f; phDecay <= 0.8f; phDecay += 0.05) {
-                        for(float expRate = 0.01f; expRate <= 0.1f; expRate += 0.01f)
+        for(int i = 10; i <= 100; i+=10) { //Number of ants
+            for (float alpha = 0.5f; alpha <= 1.0f; alpha += 0.05f) { //Alpha
+                for (float beta = 0.5f; beta <= 1.0f; beta += 0.05) { //Beta
+                    for (float phDecay = 0.05f; phDecay <= 0.8f; phDecay += 0.05) { //Pheromone Decay
+                        for(float expRate = 0.01f; expRate <= 0.1f; expRate += 0.01f) //Explore Rate
                         {
                             System.out.println("Ants= " + i + " alpha=" + alpha + " beta=" + beta + " phDecay=" + phDecay + " exploreRate= " + expRate);
                             float sum = 0.0f;
-                            for (int j = 0; j < 10; j++) {
+                            for (int j = 0; j < 10; j++) { //Average Results Over 10 Iterations
                                 AntColonyOptimization aco = new AntColonyOptimization(k, Configuration.instance.randomGenerator, i, phDecay, expRate, alpha, beta);
                                 for (int gen = 0; gen < generation; gen++) {
                                     aco.doGeneration();
                                 }
                                 sum += aco.getBestScore();
                             }
+                            //Update Best Score
                             if (bestScore < sum / 10) {
                                 bestScore = sum;
                                 bestNumAnts = i;
@@ -245,7 +272,7 @@ public class Application {
                 }
             }
         }
-
+        //Write Configuration to file
         new ACORecommender(bestNumAnts,generation,bestAlpha,bestBeta,bestPhDecay,bestExploreRate).writeFile(true);
 
     }
@@ -261,22 +288,21 @@ public class Application {
         float bestc2 = 0.0f;
         float bestInertia = 0.0f;
 
-        for(int particles = 10; particles < 100; particles+=10)
+        for(int particles = 10; particles < 100; particles+=10) //Number of Particles
         {
-            System.out.println("Testing " + particles + " particles.");
-            for(float minV = -10.0f; minV < 0; minV += 0.5f)
+            for(float minV = -10.0f; minV < 0; minV += 0.5f) //MinV
             {
-                for(float maxV = 10.0f; maxV > 0; maxV-=0.5f)
+                for(float maxV = 10.0f; maxV > 0; maxV-=0.5f) //MaxV
                 {
-                    for(float c1 = 0.05f; c1 <= 1.0f; c1 += 0.05)
+                    for(float c1 = 0.05f; c1 <= 1.0f; c1 += 0.05) //C1
                     {
-                        for(float c2 = 0.05f; c2 <= 1.0f; c2 += 0.05)
+                        for(float c2 = 0.05f; c2 <= 1.0f; c2 += 0.05) //C2
                         {
-                            for(float inertia = 0.8f; inertia <= 1.2f; inertia +=0.05)
+                            for(float inertia = 0.8f; inertia <= 1.2f; inertia +=0.05) //Inertia
                             {
                                 System.out.println("Particles= " + particles + " minV= " + minV + " maxV= " + maxV + " c1=" + c1 + " c2=" + c2 + " inertia=" + inertia);
                                 float sum = 0.0f;
-                                for(int i = 0; i < 10; i++)
+                                for(int i = 0; i < 10; i++) //Average score over 10 iterations
                                 {
                                     ParticleSwarmOptimization pso = new ParticleSwarmOptimization(particles,maxV,minV,c1,c2,inertia,k,Configuration.instance.randomGenerator);
                                     for(int j = 0; j < generations; j++)
@@ -285,7 +311,7 @@ public class Application {
                                     }
                                     sum += pso.getBestScore();
                                 }
-
+                                //Update best score
                                 if(bestScore < sum/10)
                                 {
                                     bestScore = sum/10;
@@ -303,7 +329,7 @@ public class Application {
                 }
             }
         }
-
+        //Write Configuration to file
         new PSORecommender(bestNumParticles,generations,bestMinV,bestMaxV,bestc1,bestc2,bestInertia).writeFile(true);
 
     }
@@ -314,13 +340,13 @@ public class Application {
         float bestTemperature = 0.0f;
         float bestCoolingRate = 0.0f;
         //For Temperature
-        for(float temp = 100; temp <= 10000.0f; temp +=100)
+        for(float temp = 100; temp <= 10000.0f; temp +=100) //Temperature
         {
-            for(float coolingRate = 0.001f; coolingRate <= 0.2f; coolingRate += 0.001f)
+            for(float coolingRate = 0.001f; coolingRate <= 0.2f; coolingRate += 0.001f) //Cooling Rate
             {
                 System.out.println("Temp= " + temp + " Cooling rate= " + coolingRate);
                 float sum = 0.0f;
-                for(int i = 0; i < 10; i ++)
+                for(int i = 0; i < 10; i ++) //Average results over 10 iterations
                 {
                     SimulatedAnnealing sa = new SimulatedAnnealing(temp,coolingRate, k, Configuration.instance.randomGenerator,SimulatedAnnealing.AnnealMode.STD);
                     while (sa.getTemperature() > 1f) {
@@ -328,7 +354,7 @@ public class Application {
                     }
                     sum += sa.getBestScore();
                 }
-                if(bestScore < sum/10)
+                if(bestScore < sum/10) //Update best score
                 {
                     bestScore = sum/10;
                     bestTemperature = temp;
@@ -336,7 +362,7 @@ public class Application {
                 }
             }
         }
-
+        //Write best configuration
         new SARecommender(bestTemperature,bestCoolingRate).writeFile(true);
 
     }
@@ -365,25 +391,24 @@ public class Application {
         String bestMutateFunc = "";
 
 
-        for(int cap = 100; cap < 1000; cap+=50)
+        for(int cap = 100; cap < 1000; cap+=50) //Population Capacity
         {
-            System.out.println("Testing population of " + cap);
-            for(float mutationRate = 0.01f; mutationRate <= 0.1f; mutationRate +=0.01)
+            for(float mutationRate = 0.01f; mutationRate <= 0.1f; mutationRate +=0.01) //Mutation Rate
             {
-                for(float crossOverRate = 0.6f; crossOverRate<=1.0f; crossOverRate += 0.05)
+                for(float crossOverRate = 0.6f; crossOverRate<=1.0f; crossOverRate += 0.05) //CrossOver rate
                 {
-                    for(float elitism = 0; elitism <= 0.1f; elitism +=0.01)
+                    for(float elitism = 0; elitism <= 0.1f; elitism +=0.01) //Elitism
                     {
-                        for(int c = 0; c < crossOverFuncs.length; c++)
+                        for(int c = 0; c < crossOverFuncs.length; c++) //CrossOver Function
                         {
-                            for(int s = 0; s < selectionFuncs.length; s++)
+                            for(int s = 0; s < selectionFuncs.length; s++) //Selection Function
                             {
-                                for(int m = 0; m < mutationFunc.length; m++)
+                                for(int m = 0; m < mutationFunc.length; m++) //Mutation Function
                                 {
                                     System.out.println("Capacity= " + cap + " mutatationRate= " + mutationRate + " crossOverRate=" + crossOverRate + " elitism= " +elitism + " CrossOver Operator= " + crossOverFuncs[c]
                                     + " Selection Function= " + selectionFuncs[s] + " Mutation Operator= " + mutationFunc[m]);
                                     float sum = 0.0f;
-                                    for(int i = 0; i < 10; i++)
+                                    for(int i = 0; i < 10; i++) //Average results over 10 iterations
                                     {
                                         KnapsackGAManager ga = KnapsackGAManager.KnapsackCreator(cap,k.GetTable().size(),k,Configuration.instance.randomGenerator,mutationRate,mOps[m],
                                                 elitism,sOps[s],crossOverRate,cOps[c],KnapsackGAManager.GAMODE.STD);
@@ -393,7 +418,7 @@ public class Application {
                                         }
                                         sum += ga.GetBestAgent().GetFitness();
                                     }
-                                    if(bestScore < sum/10)
+                                    if(bestScore < sum/10) //Update best score
                                     {
                                         bestScore = sum/10;
                                         bestCapacity = cap;
@@ -412,7 +437,7 @@ public class Application {
             }
         }
 
-
+        //Write Configuration to file
         new GARecommender(bestCapacity,generations,bestMutationRate,bestCrossoverRate,bestElitismRatio,bestCrossOverFunc,bestMutateFunc,bestSelectionFunc).writeFile(true);
 
 

@@ -16,22 +16,23 @@ public class Insertion<T>  extends MutateFunction<T> {
     @Override
     public void Mutate(ArrayList<T> gene)
     {
+        //Get two indices
         int firstIndex = randomizer.nextInt(gene.size());
         int secondIndex = randomizer.nextInt(gene.size());
-        while (firstIndex == secondIndex)
+        while (firstIndex == secondIndex) //ensure the are unequal
         {
             secondIndex = randomizer.nextInt(gene.size());
         }
 
-        if(secondIndex < firstIndex)
+        if(secondIndex < firstIndex) //and that firstIndex is < secondIndex
         {
             int temp = firstIndex;
             firstIndex = secondIndex;
             secondIndex = temp;
         }
 
-        T temp = gene.get(firstIndex);
+        T temp = gene.get(firstIndex); //Remove the allele at the first index
         gene.remove(firstIndex);
-        gene.add(secondIndex - 1, temp);
+        gene.add(secondIndex - 1, temp); //Put it the second index position
     }
 }

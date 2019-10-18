@@ -11,8 +11,8 @@ import java.util.Scanner;
 public class Knapsack
 {
 
-    private Dictionary<Integer,KnapsackItem> lookupTable;
-    private int maxWeight;
+    private Dictionary<Integer,KnapsackItem> lookupTable; //Contains all of the Knapsack Items
+    private int maxWeight; //Max weight of Knapsack
 
     public Knapsack(int maxWeight)
     {
@@ -20,7 +20,7 @@ public class Knapsack
         lookupTable = new Hashtable<>();
     }
 
-    public Knapsack(int maxWeight, String dataPath)
+    public Knapsack(int maxWeight, String dataPath) //Constructor for loading Knapsack from csv file
     {
         this.maxWeight = maxWeight;
         lookupTable = new Hashtable<>();
@@ -46,19 +46,19 @@ public class Knapsack
     public Dictionary<Integer,KnapsackItem> GetTable()
     {
         return  lookupTable;
-    }
+    } //Gets Table
     public int GetMaxWeight()
     {
         return  maxWeight;
-    }
+    } //Gets Max Weight
 
 
     public void Add(int key, KnapsackItem item)
     {
         lookupTable.put(key,item);
-    }
+    } //Adds item to lookup table
 
-    public int GetWeight(ArrayList<Boolean> encoding)
+    public int GetWeight(ArrayList<Boolean> encoding) //Gets weight of binary encoding
     {
         int weight = 0;
         for (int i = 0; i < encoding.size(); i++)
@@ -71,7 +71,7 @@ public class Knapsack
         return weight;
     }
 
-    public ArrayList<Boolean> getEmptyKnapsack()
+    public ArrayList<Boolean> getEmptyKnapsack() //Returns an empty encoding
     {
         ArrayList<Boolean> toRet = new ArrayList<>();
         for(int i = 0; i < lookupTable.size(); i++)
@@ -79,7 +79,7 @@ public class Knapsack
         return  toRet;
     }
 
-    public String identifier(ArrayList<Boolean> solution)
+    public String identifier(ArrayList<Boolean> solution) //Creates a string representation based on a boolean encoding of the knapsack
     {
         String toRet = "";
         for (boolean b : solution)
@@ -92,7 +92,7 @@ public class Knapsack
         return toRet;
     }
 
-    public static ArrayList<Boolean> createDeepCopy(ArrayList<Boolean> array)
+    public static ArrayList<Boolean> createDeepCopy(ArrayList<Boolean> array) //Creates a deep copy of a knapsack encoding
     {
         ArrayList<Boolean> deepCopy = new ArrayList<>();
         for(Boolean b : array)
@@ -105,7 +105,7 @@ public class Knapsack
         return deepCopy;
     }
 
-    public ArrayList<Boolean> construct(String representation)
+    public ArrayList<Boolean> construct(String representation) //Constructs an encoding based on a a string representation
     {
         ArrayList<Boolean> toRet = new ArrayList<>();
         for(char c : representation.toCharArray())
