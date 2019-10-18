@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="636cd9a1-4dd8-47f2-af4e-f608991e2530" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/algorithm/pso/main/ParticleSwarmOptimization.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/pso/main/ParticleSwarmOptimization.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/randomizer/GeneRandomizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/randomizer/GeneRandomizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/randomizer/KnapsackGeneRandomizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/randomizer/KnapsackGeneRandomizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/selection/RouletteWheel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/selection/RouletteWheel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/selection/SelectionFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/selection/SelectionFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/evolution/selection/Tournament.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/evolution/selection/Tournament.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Configuration.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

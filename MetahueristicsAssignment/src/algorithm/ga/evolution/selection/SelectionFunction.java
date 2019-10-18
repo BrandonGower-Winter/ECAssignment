@@ -5,6 +5,7 @@ import random.MersenneTwisterFast;
 
 import java.util.ArrayList;
 
+//Selection Function abstract class
 public abstract class SelectionFunction <T> {
     protected MersenneTwisterFast randomizer;
 

@@ -17,12 +17,12 @@ public enum Configuration {
     public int maximumCapacity = 822;
     public int bestKnownOptimum = 1013;
 
-    public HeuristicMode mode = HeuristicMode.GA; //Program defaults to GA
+    public HeuristicMode mode = HeuristicMode.PSO; //Program defaults to PSO (Best solution)
     public DebugMode dMode = DebugMode.NONE; //Defaults to no debug mode
     public Config configuration = Config.DEFAULT; //Defaults to default configuration
 
     public boolean searchBest = false; //Used to determine whether configuration search was selected
-
+    public boolean findBestAlgo = false; //Used to find best algorithm
 
     public void Configure(String args[], long seed)
     {
@@ -46,6 +46,9 @@ public enum Configuration {
                     break;
                 case "-search_best_configuration":
                     searchBest = true;
+                    break;
+                case "-find_best_algorithm":
+                    findBestAlgo = true;
                     break;
                 default:
                     System.err.println("Unrecognized Option: " + args[i]);
@@ -85,6 +88,7 @@ public enum Configuration {
             case "aco":
                 return HeuristicMode.ACO;
             case "pso":
+            case "best-algorithm":
                 return HeuristicMode.PSO;
         }
         return null;

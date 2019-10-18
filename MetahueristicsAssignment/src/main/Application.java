@@ -33,9 +33,149 @@ public class Application {
             System.out.println("Max Weight: " + k.GetMaxWeight());
             System.out.println("# of Items: " + k.GetTable().size());
         }
+        if(Configuration.instance.findBestAlgo) //Find best algorithm by comparing means of best configurations
+        {
+            System.out.println("Looking for best algorithm.");
+            String bestAlgorithm = "GA";
+            float bestScore = 0.0f;
+            int iterations = 100;
+            //////////////////////////////////////////////////GA///////////////////////////////////////////////////////
+            GARecommender gaRecommender = new GARecommender(true);
+            //Identify Selection Function
+            KnapsackGAManager.SelectionOperator sOp;
+            switch (gaRecommender.selectionFunc)
+            {
+                case "tournament":
+                    sOp = KnapsackGAManager.SelectionOperator.TOURNAMENT;
+                    break;
+                default:
+                    sOp = KnapsackGAManager.SelectionOperator.ROULETTE;
+            }
 
-        //Use Algorithm
-        if(!Configuration.instance.searchBest)
+            //Identify Mutate Function
+            KnapsackGAManager.MutationOperator mOp;
+            switch (gaRecommender.mutateFunc)
+            {
+                case "bitflip":
+                    mOp = KnapsackGAManager.MutationOperator.BITFLIP;
+                    break;
+                case "displacement":
+                    mOp = KnapsackGAManager.MutationOperator.DISPLACEMENT;
+                    break;
+                case "exchange":
+                    mOp = KnapsackGAManager.MutationOperator.EXCHANGE;
+                    break;
+                case "insertion":
+                    mOp = KnapsackGAManager.MutationOperator.INSERTION;
+                    break;
+                case "inversion":
+                    mOp = KnapsackGAManager.MutationOperator.INVERSION;
+                    break;
+                default:
+                    mOp = KnapsackGAManager.MutationOperator.REVERSE;
+            }
+
+            //Identify Crossover Function
+            KnapsackGAManager.CrossoverOperator cOP;
+            switch (gaRecommender.crossoverFunc)
+            {
+                case "twopoint":
+                    cOP = KnapsackGAManager.CrossoverOperator.TWOPOINT;
+                    break;
+                default:
+                    cOP = KnapsackGAManager.CrossoverOperator.ONEPOINT;
+            }
+            float score = 0.0f;
+            for(int i = 0; i < iterations; i ++) //For GA
+            {
+                Configuration.instance.randomGenerator.setSeed(System.currentTimeMillis());
+                //Load Genetic Algorithm Manager
+                KnapsackGAManager ga = KnapsackGAManager.KnapsackCreator(gaRecommender.capacity,geneLength,k,Configuration.instance.randomGenerator,
+                        gaRecommender.mutationRate, mOp,gaRecommender.elitismRatio,sOp,
+                        gaRecommender.crossoverRate,cOP, GAManager.GAMODE.DEBUG);
+
+                //Simulate n generations
+                for(int g = 0; g < gaRecommender.generations; g++)
+                {
+                    ga.DoCylce();
+                }
+                //Add score
+                score += ga.GetBestAgent().GetFitness();
+            }
+
+            bestScore = score/iterations;
+            System.out.println("GA Score: " + score/iterations);
+            //////////////////////////////////////////////////SA///////////////////////////////////////////////////////
+            score = 0.0f;
+
+            //Load Configuration
+            SARecommender saRecommender = new SARecommender(true);
+            for(int i = 0; i < iterations; i ++) //For SA
+            {
+                Configuration.instance.randomGenerator.setSeed(System.currentTimeMillis());
+                //Create Simulated Annealing Instance
+                SimulatedAnnealing sa = new SimulatedAnnealing(saRecommender.temperature, saRecommender.coolingRate, k, Configuration.instance.randomGenerator, SimulatedAnnealing.AnnealMode.DEBUG);
+                //Run the simulated annealing algorithm
+                while (sa.getTemperature() > 1f) {
+                    sa.doCycle();
+
+                }
+                //Add to score
+                score += sa.getBestScore();
+            }
+            if(bestScore < score/iterations)
+            {
+                bestScore = score/iterations;
+                bestAlgorithm = "SA";
+            }
+            System.out.println("SA Score:" + score/iterations);
+            //////////////////////////////////////////////////ACO///////////////////////////////////////////////////////
+            score = 0.0f;
+            ACORecommender acoRecommender = new ACORecommender(true);
+            for(int i = 0; i < iterations; i ++) //For ACO
+            {
+                Configuration.instance.randomGenerator.setSeed(System.currentTimeMillis());
+                //Create Ant Colony Optimization
+                AntColonyOptimization aco = new AntColonyOptimization(k,Configuration.instance.randomGenerator,acoRecommender.numAnts,acoRecommender.pheromoneDecay,
+                        acoRecommender.exploreRate,acoRecommender.alpha,acoRecommender.beta);
+                //Run algorithm
+                for(int j = 0; j < acoRecommender.generations; j++)
+                {
+                    aco.doGeneration();
+                }
+                score+=aco.getBestScore();
+            }
+            if(bestScore < score/iterations)
+            {
+                bestScore = score/iterations;
+                bestAlgorithm = "ACO";
+            }
+            System.out.println("ACO Score: " + score/iterations);
+            //////////////////////////////////////////////////PSO///////////////////////////////////////////////////////
+            score = 0.0f;
+            PSORecommender psoRecommender = new PSORecommender(true);
+
+            for(int i = 0; i < iterations; i ++) //For PSO
+            {
+                Configuration.instance.randomGenerator.setSeed(System.currentTimeMillis());
+                ParticleSwarmOptimization pso = new ParticleSwarmOptimization(psoRecommender.numParticles,psoRecommender.maxV,psoRecommender.minV,
+                        psoRecommender.c1,psoRecommender.c2,psoRecommender.inertia,k,Configuration.instance.randomGenerator);
+                //Run algorithm
+                for(int j = 0; j < psoRecommender.generations; j++)
+                {
+                    pso.run();
+                }
+                score+=pso.getBestScore();
+            }
+
+            if(bestScore < score/iterations)
+            {
+                bestAlgorithm = "PSO";
+            }
+            System.out.println("PSO Score: " + score/iterations);
+            System.out.println("Best Algorithm: " + bestAlgorithm);
+        }
+        else if(!Configuration.instance.searchBest) //Use Algorithm
         {
             long start = System.currentTimeMillis();
             float bestResult = 0;
@@ -203,7 +343,7 @@ public class Application {
             //Print out best result
             System.out.println("Completed in " + (System.currentTimeMillis() - start)/1000f + " seconds.\nSeed:" + seed + "\nBest Result --> " + bestResult + "\nEncoding: " + solutionEncoding);
         }
-        else //Search for best configuration
+        else //Search for best configuration for a given algorithm
         {
             if(Configuration.instance.mode == HeuristicMode.SA)
             {

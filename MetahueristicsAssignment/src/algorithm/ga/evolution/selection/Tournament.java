@@ -32,7 +32,7 @@ public class Tournament<T> extends SelectionFunction<T>
         return parents;
     }
 
-    private GeneticAgent<T> Fight(ArrayList<GeneticAgent<T>> population)
+    private GeneticAgent<T> Fight(ArrayList<GeneticAgent<T>> population) //Choose k random combatants and select champion
     {
         ArrayList<GeneticAgent<T>> combatants = new ArrayList<>();
         for(int i = 0; i < k; i++)
@@ -46,6 +46,7 @@ public class Tournament<T> extends SelectionFunction<T>
         }
 
         GeneticAgent<T> champion = null;
+        //I deliberately left the champion selection deterministic because it gave me better results and as a result the best solution is always selected
         for(GeneticAgent<T> combatant : combatants)
         {
             if(champion == null || champion.GetFitness() < combatant.GetFitness())

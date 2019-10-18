@@ -16,6 +16,8 @@ public class RouletteWheel<T> extends SelectionFunction<T> {
 
         ArrayList<GeneticAgent<T>> parents = new ArrayList<>();
 
+
+        //Create the roulette wheel
         float totalFitness = 0;
         for (GeneticAgent<T> individual : population)
         {
@@ -34,7 +36,7 @@ public class RouletteWheel<T> extends SelectionFunction<T> {
         {
             int parentOne = SpinWheel(population,probabilities);
             int parentTwo = SpinWheel(population,probabilities);
-            while(parentOne == parentTwo) //Could be cause for concern.
+            while(parentOne == parentTwo)
             {
                 parentTwo = SpinWheel(population,probabilities);
             }
@@ -44,7 +46,7 @@ public class RouletteWheel<T> extends SelectionFunction<T> {
         return parents;
     }
 
-    private int SpinWheel(ArrayList<GeneticAgent<T>> population, float[] probabilities)
+    private int SpinWheel(ArrayList<GeneticAgent<T>> population, float[] probabilities) //Spins the wheel
     {
 
         float random = randomizer.nextFloat();

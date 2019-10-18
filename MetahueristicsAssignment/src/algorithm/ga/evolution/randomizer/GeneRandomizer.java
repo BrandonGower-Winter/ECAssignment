@@ -5,6 +5,7 @@ import random.MersenneTwisterFast;
 
 import java.util.ArrayList;
 
+//Abstract Randomizer Class
 public abstract class GeneRandomizer <T> {
 
     protected MersenneTwisterFast randomizer;
