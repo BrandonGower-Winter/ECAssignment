@@ -2,11 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="636cd9a1-4dd8-47f2-af4e-f608991e2530" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/algorithm/pso/main/Particle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/algorithm/pso/main/ParticleSwarmOptimization.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/Recommenders/ACO_DEFAULT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/Recommenders/GA_BEST.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/Recommenders/GA_DEFAULT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/Recommenders/PSO_BEST.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/Recommenders/PSO_DEFAULT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/Recommenders/SA_DEFAULT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/algorithm/aco/recommender/ACORecommender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/algorithm/ga/recommender/GARecommender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/algorithm/pso/recommender/PSORecommender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/algorithm/sa/recommender/SARecommender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm/ga/base/GAManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm/ga/base/GAManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Knapsack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Knapsack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Configuration.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

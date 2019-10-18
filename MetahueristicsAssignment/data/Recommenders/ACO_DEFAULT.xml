@@ -1,0 +1,6 @@
+<numAnts>10</numAnts>
+<generations>150</generations>
+<alpha>0.8</alpha>
+<beta>0.7</beta>
+<pheromone>0.5</pheromone>
+<explore>0.01</explore>

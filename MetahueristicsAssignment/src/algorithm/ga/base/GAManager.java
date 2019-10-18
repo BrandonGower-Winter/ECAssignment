@@ -29,7 +29,6 @@ public class GAManager<T>
     protected CrossOverFunction crossoverFunc;
     protected MutateFunction mutateFunc;
     protected SelectionFunction selectionFunc;
-
     protected GeneRandomizer geneRandomizer;
 
     protected GAMODE mode;

@@ -1,0 +1,7 @@
+<numParticles>100</numParticles>
+<generations>200</generations>
+<minV>-2</minV>
+<maxV>2</maxV>
+<c1>0.6</c1>
+<c2>0.4</c2>
+<inertia>1</inertia>

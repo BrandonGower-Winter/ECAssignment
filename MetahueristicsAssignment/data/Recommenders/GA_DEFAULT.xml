@@ -1,0 +1,8 @@
+<capacity>1000</capacity>
+<generations>150</generations>
+<mutationRate>0.05</mutationRate>
+<crossoverRate>1</crossoverRate>
+<elitismRatio>0.01</elitismRatio>
+<crossoverFunc>onepoint</crossoverFunc>
+<mutateFunc>insertion</mutateFunc>
+<selectionFunc>roulette</selectionFunc>
